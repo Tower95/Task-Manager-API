@@ -1,0 +1,18 @@
+
+'use strict'
+const app = require('../app');
+const http = require('http');
+
+//Get the port from the env or use default.
+const port = process.env.APP_PORT || "3000";
+
+//Pass the port to the express app.
+app.set('port', port);
+
+//create the server http.
+const server = http.createServer(app);
+
+//expose the port.
+server.listen(port);
+
+console.log(`Listenig on port: ${port}`);
