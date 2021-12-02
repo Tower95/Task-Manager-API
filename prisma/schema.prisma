@@ -9,3 +9,41 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Task {
+
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  status      Status   @default(OPEN)
+  comments    String?
+  onCharge    Int
+  user        User     @relation(fields: [onCharge], references: [id])
+  tags        String?
+  dateLimit   DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  Task      Task[]
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Status {
+  OPEN
+  PROGRES
+  DONE
+  LATE
+  CANCEL
+}
