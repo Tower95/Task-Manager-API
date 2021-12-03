@@ -70,5 +70,8 @@ Ismael Torres Martinez
 
 Please make sure to update tests as appropriate.
 
+## Documentation
+Check the Documentations on the route "/doc" or for [postman](https://documenter.getpostman.com/view/13491016/UVJhCaFF)
+
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

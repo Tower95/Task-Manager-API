@@ -7,52 +7,59 @@ const Task = require('./dal');
  */
 router.get('/',async (req, res) => {
   let payload = undefined;
-  payload = await Task.getAll();
+  const {id} = req.user;
+  console.log(id);
+  payload = await Task.getAll(id);
   res.json({ payload });
 });
 
 /**
  * User Endpoint HTML GET ONE:ID
  */
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {  
   const { id } = req.params;
-
-  let task = await Task.getById(Number(id));
+  console.log(req.user);
+  const user = req.user;
+  let task = await Task.getById(Number(id), user.id);
 
   if (!task) {
     return res.status(404).json({ payload: "task doesn't exist" });
   }
 
-  res.json({ payload: task });
+  res.json({ payload: task }); 
 });
 
 /**
  * User Endpoint HTML POST CREATE
  */
 router.post('/', async (req, res) => {
+ const {user,body} = req;
+ console.log(user.id);
   let payload = undefined;
   const {
     title,
     description,
     status,
     comments,
-    onCharge,
     tags,
     dateLimit
-  } = req.body
+  } = body;
+
   let task = {
     title,
     description,
     status,
     comments,
-    onCharge: req.user.id,
+    onCharge: user.id,
     tags,
     dateLimit: new Date(dateLimit)
-  }
+  };
+
   payload = await Task.save(task);
   if (!payload) {
     return res.json({ msg: `can't create task` });
   }
+  
   return res.status(201).json({ payload });
 });
 
@@ -61,6 +68,7 @@ router.post('/', async (req, res) => {
  */
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
+  const user = req.user;
   const {
     title,
     description,
@@ -69,7 +77,8 @@ router.put('/:id', async (req, res) => {
     onCharge,
     tags,
     dateLimit
-  } = req.body
+  } = req.body;
+
   let data = {
     title,
     description,
@@ -77,12 +86,15 @@ router.put('/:id', async (req, res) => {
     comments,
     tags,
     dateLimit
-  }
-  let task = await Task.updateById(Number(id), data);
+  };
+  
+  let task = await Task.getById(Number(id),user.id );
 
   if (!task) {
     return res.status(404).json({ payload: "task doesn't exist" });
   }
+
+  task = await Task.updateById(Number(id),data);
 
   res.json({ payload: task });
 });
@@ -92,10 +104,15 @@ router.put('/:id', async (req, res) => {
  */
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
-  let task = await Task.deleteById(Number(id));
+  const user = req.user;
+  let task = await Task.getById(Number(id),user.id );
+
   if (!task) {
     return res.status(404).json({ payload: "task doesn't exist" });
   }
+
+  task = await Task.deleteById(Number(id));
+ 
 
   res.json({ payload: task });
 });

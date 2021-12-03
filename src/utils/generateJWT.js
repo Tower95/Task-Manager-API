@@ -13,9 +13,8 @@ const generateJWT = (data) => {
   }
   //get de user id from the object 
   const payload = {
-    _id: data._id,
-    ImageUser: data.userImage,
-    username: data.username
+    id: data.id,
+    name: data.name,
   };
 
   return jwt.sign(payload, process.env.SEED_TOKEN, { expiresIn: '12h' },);

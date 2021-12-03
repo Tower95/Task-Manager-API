@@ -23,12 +23,13 @@ exports.save = async (task) => {
 /**
  * @async
  * @function This function get all the tasks in the DB.
+ * @argument {Number} onCharge id
  * @returns Array tasks
  */
-exports.getAll = async () => {
+exports.getAll = async (id) => {
   let result = undefined;
   try {
-    result = await Prisma.task.findMany({});
+    result = await Prisma.task.findMany({where : {onCharge:id}});
   }
   catch (error) {
     handleError(error);
@@ -39,14 +40,15 @@ exports.getAll = async () => {
 /**
  * @async
  * @function get a task by Id.
- * @param {Number} id 
+ * @param {Number} id task 
+ * @param {Number} user id.
  * @returns 
  */
-exports.getById = async (id) => {
+exports.getById = async (id,user) => {
   let result = undefined;
   try {
     result = await Prisma.task.findFirst({
-      where: { id }
+      where: { id , onCharge:user}
     });
   }
   catch (error) {
@@ -58,7 +60,8 @@ exports.getById = async (id) => {
 /**
  * @async
  * @function update a task by his ID
- * @param {Number} id 
+ * @param {Number} id of task
+ * @param {Number} user  id user
  * @param {Object} task new data
  * @returns {Object} task modified in the DB,
  */
@@ -66,7 +69,7 @@ exports.updateById = async (id, task) => {
   let result = undefined;
   try {
     result = await Prisma.task.update({
-      where: { id },
+      where: { id  },
       data:  task 
     });
   }

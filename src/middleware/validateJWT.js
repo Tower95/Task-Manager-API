@@ -34,8 +34,9 @@ const validateJWT = async (request = request, response = response, next) => {
   let UserReq = undefined;
 
   try {
-    const payload = jwt.verify(token, process.env.SEED_TOKEN);
-    UserReq = await User.getById(payload._id);
+    const payload = jwt.verify(token, process.env.SEED_TOKEN); 
+    console.log(payload);
+    UserReq = await User.getById(payload.id);
 
   } catch (error) {
     response.status(401).json({
@@ -54,7 +55,6 @@ const validateJWT = async (request = request, response = response, next) => {
   }
 
   request.user = UserReq
-  console.log("exec validation");
   next();
 
 }
