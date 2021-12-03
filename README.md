@@ -1,20 +1,22 @@
 # Task-Manager-API
 
-For run this app you can use node
+For run this app you can use node-17
 
-## Installation
+## Requires
+Change the "Example.env" to just ".env"
+you need a connection to postgres on the ".env" file
+like :
+```
+#DATABASE_URL="postgresql://<USER>:<PASSWORD>@<HOST>:<PORT>/<DB_NAME>?schema=<SCHEMA_TYPE>"
+DATABASE_URL="postgresql://postgres:example@db:5432/TaskManager?schema=public"
+```
+
+## Install Dependencies
 
 Use the package manager [npm](https://nodejs.org/en/) to install the dependencies.
 
 ```bash
 npm install 
-```
-
-### OR
-You can use [ docker-compose](https://docs.docker.com/compose/) to run the environment.
-
-```bash
-docker-compose up 
 ```
 
 ## Usage
@@ -30,7 +32,15 @@ npm run dev
 #generate the documentation
 npm run doc
 ```
-File Structure.
+
+## Docker .
+You can use [ docker-compose](https://docs.docker.com/compose/) to run the environment.
+
+```bash
+docker-compose up 
+```
+
+## File Structure.
 ```
 ./src/
 ├── components

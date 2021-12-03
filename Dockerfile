@@ -1,10 +1,15 @@
 FROM node:lts-alpine
 
-WORKDIR /usr/src/app
+WORKDIR /home/node/app
 
 COPY ./package*.json ./
 
-RUN npm install
+RUN npm install && npm install -g prisma
+
+# on aucens of sonthing better. 
+RUN chmod -R 777 /home/node/app/node_modules/prisma 
+
+RUN chmod -R 777 /home/node/app/node_modules/.prisma
 
 COPY ./ ./
 

@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "predev":"prisma migrate dev",
     "dev": "nodemon ./bin/www",
+    "prestart":"prisma migrate dev",
     "start": "node ./bin/www",
     "doc": "jsdoc -c jsdoc.json"
   },

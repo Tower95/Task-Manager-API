@@ -23,7 +23,7 @@ const user = require('./src/components/user').router;
 //add routes
 app.use('/task', task);
 app.use('/user', user);
-app.use(express.static("doc"));
+app.use('/doc',express.static("doc"));
 
 //export express app.
 module.exports = app;
