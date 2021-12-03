@@ -1,5 +1,6 @@
-const ErrorHandeler = require('./errorHandel');
-
+const ErrorHandel = require('./errorHandel');
+const GenerateJWT = require('./generateJWT').generateJWT;
 module.exports ={
-  ErrorHandel
+  ErrorHandel,
+  GenerateJWT
 }
