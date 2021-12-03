@@ -3,9 +3,21 @@ const jwt = require('jsonwebtoken');
 const { response, request } = require('express');
 const User = require('../components/user/dal');
 
+/**
+ * Middleware
+ * @function middleware validated the request has the authorization header and it has a valid token.
+ * @param {any} request express Object
+ * @param {any} response express Object
+ * @param {Function} next callback
+ * @returns 
+ */
 const validateJWT = async (request = request, response = response, next) => {
 
-  if (request.url === '/user/signin' || request.url === '/login' || request.url === '/user/signup') {
+  if (!request.url.includes('task') || request.url.includes('user/signin')) {
+    next();
+    return
+  }
+  if(request.url.includes('user/signup')){
     next();
     return
   }
@@ -42,6 +54,7 @@ const validateJWT = async (request = request, response = response, next) => {
   }
 
   request.user = UserReq
+  console.log("exec validation");
   next();
 
 }

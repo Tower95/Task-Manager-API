@@ -5,7 +5,7 @@ const Task = require('./dal');
 /**
  * Task Endpoint HTML GET ALL
  */
-router.get('/', async (req, res) => {
+router.get('/',async (req, res) => {
   let payload = undefined;
   payload = await Task.getAll();
   res.json({ payload });
